@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Mai Trần Bảo Khang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Reset & Biến màu sắc chủ đạo --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary-light: #e0f2fe; /* Xanh da trời cực nhẹ làm nền */
+            --primary-main: #38bdf8;  /* Xanh da trời năng động */
+            --primary-dark: #0284c7;  /* Xanh da trời đậm nhấn nhá */
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, var(--primary-light) 0%, #f0fdfa 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- Card chính với hiệu ứng xuất hiện (Fade In Up) --- */
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.15);
+            width: 100%;
+            max-width: 480px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        /* Trang trí background card */
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        /* --- Avatar với hiệu ứng viền xoay và bóng nảy --- */
+        .avatar-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+            z-index: 1;
+        }
+
+        .avatar-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px dashed var(--primary-main);
+            border-radius: 50%;
+            animation: rotateBorder 12s linear infinite;
+        }
+
+        .avatar {
+            width: 124px;
+            height: 124px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-container:hover .avatar {
+            transform: scale(1.05);
+        }
+
+        /* --- Thông tin cá nhân --- */
+        .name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .role {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--primary-main), var(--primary-dark));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        /* --- Khối Sở thích & Địa điểm --- */
+        .info-section {
+            text-align: left;
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hobby-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .hobby-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .hobby-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-main);
+            color: var(--primary-dark);
+            box-shadow: 0 6px 12px rgba(56, 189, 248, 0.1);
+        }
+
+        .hobby-item i {
+            font-size: 1.3rem;
+            color: var(--primary-main);
+        }
+
+        /* Địa điểm yêu thích */
+        .location-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0f9ff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-main);
+        }
+
+        .location-box i {
+            font-size: 1.2rem;
+            color: #ef4444; /* Màu đỏ cho icon map pin thêm nổi bật */
+            animation: bounce 2s infinite;
+        }
+
+        .location-text span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        .location-text strong {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        /* --- Nút liên hệ/mạng xã hội --- */
+        .social-connect {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: var(--primary-main);
+            color: white;
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+
+        /* ==========================================
+           HIỆU ỨNG ĐỘNG (ANIMATIONS)
+           ========================================== */
+
+        /* Hiệu ứng hiện card mượt mà */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Viền xoay quanh avatar */
+        @keyframes rotateBorder {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hiệu ứng mạch đập nhẹ cho tag danh hiệu */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(56, 189, 248, 0.6);
+            }
+            100% {
+                box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            }
+        }
+
+        /* Hiệu ứng nhảy nhót cho pin định vị Đà Lạt */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-6px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-card">
+    <div class="avatar-container">
+        <div class="avatar-border"></div>
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256" alt="Mai Trần Bảo Khang Avatar" class="avatar">
+    </div>
+
+    <h1 class="name">Mai Trần Bảo Khang</h1>
+    <div class="role">
+        <i class="fa-brands fa-java"></i> Full Stack Java Developer
+    </div>
+
+    <div class="info-section">
+        <h2 class="section-title"><i class="fa-solid fa-heart"></i> Sở Thích Cá Nhân</h2>
+        <ul class="hobby-list">
+            <li class="hobby-item">
+                <i class="fa-solid fa-music"></i>
+                <span>Nghe nhạc</span>
+            </li>
+            <li class="hobby-item">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>Chơi game</span>
+            </li>
+            <li class="hobby-item">
+                <i class="fa-solid fa-plane"></i>
+                <span>Du lịch</span>
+            </li>
+        </ul>
+
+        <h2 class="section-title"><i class="fa-solid fa-compass"></i> Điểm Đến Yêu Thích</h2>
+        <div class="location-box">
+            <i class="fa-solid fa-location-dot"></i>
+            <div class="location-text">
+                <span>Favorite Place</span>
+                <strong>Đà Lạt mộng mơ 🌲🌟</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="social-connect">
+        <a href="#" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="#" class="social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    </div>
+</div>
+
+</body>
+</html>
